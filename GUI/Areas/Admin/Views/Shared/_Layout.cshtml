@@ -1,0 +1,338 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - GUI</title>
+    <link href="~/chain/css/style.default.css" rel="stylesheet">
+    <link href="~/chain/css/morris.css" rel="stylesheet">
+    <link href="~/chain/css/select2.css" rel="stylesheet" />
+    <link href="//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css" rel="stylesheet" />
+</head>
+<body>
+    <header>
+        <div class="headerwrapper">
+            <div class="header-left">
+                <a href="index.html" class="logo">
+                    <img src="~/chain/images/logo.png" alt="" />
+                </a>
+                <div class="pull-right">
+                    <a href="#" class="menu-collapse">
+                        <i class="fa fa-bars"></i>
+                    </a>
+                </div>
+            </div><!-- header-left -->
+
+            <div class="header-right">
+
+                <div class="pull-right">
+
+                   
+
+                   
+
+                   
+                    <div class="btn-group btn-group-option">
+                        <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
+                            <i class="fa fa-caret-down"></i>
+                        </button>
+                        <ul class="dropdown-menu pull-right" role="menu">                       
+                            <li class="divider"></li>
+                            <li><a asp-area="Admin" asp-controller="Home" asp-action="Logout"><i class="glyphicon glyphicon-log-out"></i>Sign Out</a></li>
+                        </ul>
+                    </div><!-- btn-group -->
+
+                </div><!-- pull-right -->
+
+            </div><!-- header-right -->
+
+        </div><!-- headerwrapper -->
+    </header>
+
+    <section>
+        <div class="mainwrapper">
+            <div class="leftpanel">
+                <div class="media profile-left">
+                    <a class="pull-left profile-thumb" href="profile.html">
+                        <img class="img-circle" src="~/LotteryFiles/download.jpg" alt="">
+                    </a>
+                    <div class="media-body">
+                        <h4 class="media-heading">Admin</h4>
+                       @* <small class="text-muted">Beach Lover</small>*@
+                    </div>
+                </div><!-- media -->
+
+                <h5 class="leftpanel-title">Navigation</h5>
+                <ul class="nav nav-pills nav-stacked">
+                    <li class="active"><a asp-area="admin" asp-controller="Main" asp-action="Index"><i class="fa fa-home"></i> <span>Dashboard</span></a></li>
+                    <li><a asp-action="Lotteries" asp-area="Admin" asp-controller="Lottery"><i class="fa fa-cubes"></i> <span>Lottery</span></a></li>
+                    <li><a asp-action="Winners" asp-area="Admin" asp-controller="Lottery"><i class="fa fa-dollar"></i> <span>Lottery Winners</span></a></li>
+                    <li><a asp-action="AppUsers" asp-area="Admin" asp-controller="AppUser"><i class="fa fa-user"></i> <span>App Users</span></a></li>
+                    <li class="parent">
+                        <a href="#"><i class="fa fa-gear"></i> <span>Accounts</span></a>
+                        <ul class="children">
+                            <li><a asp-area="Admin" asp-controller="Account" asp-action="Roles">Roles</a></li>
+                            <li><a asp-area="Admin" asp-controller="Account" asp-action="Users">Users</a></li>
+                        </ul>
+                    </li>
+                </ul>
+
+            </div><!-- leftpanel -->
+
+            <div class="mainpanel">
+                @RenderBody()
+
+            </div><!-- mainpanel -->
+        </div><!-- mainwrapper -->
+    </section>
+    <div class="modal fade bs-example-modal-static" id="GenericModal" tabindex="-1" role="dialog" data-backdrop="static" aria-hidden="true" style="display: none;">
+    </div>
+
+
+
+
+    <script src="~/chain/js/jquery-1.11.1.min.js"></script>
+    <script src="~/chain/js/jquery-migrate-1.2.1.min.js"></script>
+    <script src="~/chain/js/bootstrap.min.js"></script>
+    <script src="~/chain/js/modernizr.min.js"></script>
+    <script src="~/chain/js/pace.min.js"></script>
+    <script src="~/chain/js/retina.min.js"></script>
+    <script src="~/chain/js/jquery.cookies.js"></script>
+
+    @*<script src="~/chain/js/flot/jquery.flot.min.js"></script>
+    <script src="~/chain/js/flot/jquery.flot.resize.min.js"></script>
+    <script src="~/chain/js/flot/jquery.flot.spline.min.js"></script>*@
+    <script src="~/chain/js/jquery.sparkline.min.js"></script>
+    <script src="~/chain/js/morris.min.js"></script>
+    <script src="~/chain/js/raphael-2.1.0.min.js"></script>
+    <script src="~/chain/js/bootstrap-wizard.min.js"></script>
+    <script src="~/chain/js/select2.min.js"></script>
+    <script src="~/chain/js/custom.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
+    <script src="~/js/jquery.unobtrusive-ajax.js"></script>
+    @* <script src="~/chain/js/dashboard.js"></script>*@
+
+    <script>
+        //paging Script
+        function GetDataByPage(pageNumber) {
+            var PagingUrl = $('#GenericPagingDataUrl').val();
+            var PagingSearchedValue = $('#GenericPagingSearchInput').val();
+            var PagingDataUpdateDivValue = $('#PagingDataUpdatingDiv').val();
+            var PagingPageDataDropdownValue = $('#GenericPageItemDropdown :selected').val();
+            $.ajax({
+                url: PagingUrl,
+                type: "get", //send it through get method
+                data: {
+                    PageIndex: pageNumber,
+                    PageSize: PagingPageDataDropdownValue,
+                    SearchTerm: PagingSearchedValue
+                },
+                success: function (response) {
+                    //Do Something
+                    $('#' + PagingDataUpdateDivValue).html(response);
+                },
+                error: function (xhr) {
+                    //Do Something to handle error
+                }
+            });
+        }
+        function UpdatePagingData() {
+            var PagingUrl = $('#GenericPagingDataUrl').val();
+            var PagingSearchedValue = $('#GenericPagingSearchInput').val();
+            var PagingDataUpdateDivValue = $('#PagingDataUpdatingDiv').val();
+            var PagingPageDataDropdownValue = $('#GenericPageItemDropdown :selected').val();
+            $.ajax({
+                url: PagingUrl,
+                type: "get", //send it through get method
+                data: {
+                    PageIndex: 1,
+                    PageSize: PagingPageDataDropdownValue,
+                    SearchTerm: PagingSearchedValue
+                },
+                success: function (response) {
+                    //Do Something
+                    $('#' + PagingDataUpdateDivValue).html(response);
+                },
+                error: function (xhr) {
+                    //Do Something to handle error
+                }
+            });
+        }
+        //Paging Search Script
+        $('#btnGenericPagingSearch').click(function () {
+            $('#btnGenericPagingSearch').html('<i class="fa fa-spinner fa-spin"></i>');
+            $('#btnGenericPagingSearch').prop('disabled', true);
+            var PagingUrl = $('#GenericPagingDataUrl').val();
+            var PagingSearchedValue = $('#GenericPagingSearchInput').val();
+            var PagingDataUpdatingDivValue = $('#PagingDataUpdatingDiv').val();
+            var PagingPageDataDropdownValue = $('#GenericPageItemDropdown :selected').val();
+            // if (PagingSearchedValue != "" && PagingSearchedValue != null && PagingSearchedValue != undefined) {
+            $.ajax({
+                url: PagingUrl,
+                type: "get", //send it through get method
+                data: {
+                    PageIndex: 1,
+                    PageSize: PagingPageDataDropdownValue,
+                    SearchTerm: PagingSearchedValue
+                },
+                success: function (response) {
+                    //Do Something
+                    $('#' + PagingDataUpdatingDivValue).html(response);
+                    $('#btnGenericPagingSearch').html('<i class="fa  fa-search"></i>');
+                    $('#btnGenericPagingSearch').prop('disabled', false);
+                },
+                error: function (xhr) {
+                    //Do Something to handle error
+                    $('#btnGenericPagingSearch').html('<i class="fa  fa-search"></i>');
+                    $('#btnGenericPagingSearch').prop('disabled', false);
+                }
+            });
+            // }
+            //else {
+            //    alert("Enter Value to Search");
+            //    $('#btnGenericPagingSearch').html('<i class="fa  fa-search"></i>');
+            //    $('#btnGenericPagingSearch').prop('disabled', false);
+            //}
+        });
+        //Crud script
+        $('.GenericAddEntity').on('click', function () {
+            var AddSelector = $(this);
+            $(this).html('<i class="fa fa-spinner fa-spin"></i>');
+            $(this).prop('disabled', true);
+            var url = $(this).attr('id');
+            $.get(url).done(function (data) {
+                $('#GenericModal').html(data);
+                $('#GenericModal').modal('show');
+                AddSelector.html('<i class="fa fa-plus"></i>');
+                AddSelector.prop('disabled', false);
+            });
+        });
+        function OnBegin() {
+            Command: toastr["info"]("Please Wait!")
+            toastr.options = {
+                "closeButton": false,
+                "debug": false,
+                "newestOnTop": false,
+                "progressBar": true,
+                "positionClass": "toast-top-right",
+                "preventDuplicates": false,
+                "onclick": null,
+                "showDuration": "300",
+                "hideDuration": "1000",
+                "timeOut": "5000",
+                "extendedTimeOut": "1000",
+                "showEasing": "swing",
+                "hideEasing": "linear",
+                "showMethod": "fadeIn",
+                "hideMethod": "fadeOut"
+            }
+            $('#SubmitButttonId').html('<i class="fa fa-spinner fa-spin"></i>');
+            $('#SubmitButttonId').prop('disabled', true);
+        }
+        function OnSuccess(res) {
+            Command: toastr["success"]("Operation Successfully Performed!")
+            toastr.options = {
+                "closeButton": false,
+                "debug": false,
+                "newestOnTop": false,
+                "progressBar": true,
+                "positionClass": "toast-top-right",
+                "preventDuplicates": false,
+                "onclick": null,
+                "showDuration": "300",
+                "hideDuration": "1000",
+                "timeOut": "5000",
+                "extendedTimeOut": "1000",
+                "showEasing": "swing",
+                "hideEasing": "linear",
+                "showMethod": "fadeIn",
+                "hideMethod": "fadeOut"
+            }
+            $('#SubmitButttonId').html('Submit');
+            $('#SubmitButttonId').prop('disabled', false);
+            $('#GenericModal').html("");
+            $('#GenericModal').modal('toggle');
+            var GenericButtonSelecor = "#" + res;
+            $(GenericButtonSelecor).click();
+            $("div.modal-backdrop").remove();
+        }
+        function OnFailure() {
+            Command: toastr["error"]("Something went wrong!")
+            toastr.options = {
+                "closeButton": false,
+                "debug": false,
+                "newestOnTop": false,
+                "progressBar": true,
+                "positionClass": "toast-top-right",
+                "preventDuplicates": false,
+                "onclick": null,
+                "showDuration": "300",
+                "hideDuration": "1000",
+                "timeOut": "5000",
+                "extendedTimeOut": "1000",
+                "showEasing": "swing",
+                "hideEasing": "linear",
+                "showMethod": "fadeIn",
+                "hideMethod": "fadeOut"
+            }
+            $('#SubmitButttonId').html('Submit');
+            $('#SubmitButttonId').prop('disabled', false);
+        }
+        function SubmitForm() {
+            $('#GenericForm').submit();
+        }
+        function GenericEdit(thisObj) {
+            var EditSelector = $(thisObj);
+            EditSelector.html('<i class="fa fa-spinner fa-spin"></i>');
+            EditSelector.prop('disabled', true);
+            var url = EditSelector.attr('id');
+            $.get(url).done(function (data) {
+                $('#GenericModal').html(data);
+                $('#GenericModal').modal('show');
+                EditSelector.html(' <i class="fa fa-pencil"></i>');
+                EditSelector.prop('disabled', false);
+            });
+        }
+        function GenericDelete(thisobj) {
+            if (confirm("Are you sure to delete?")) {
+                var DeleteSelector = $(thisobj);
+                DeleteSelector.html('<i class="fa fa-spinner fa-spin"></i>');
+                DeleteSelector.prop('disabled', true);
+                //EditSelector.closest('tr').remove();
+                var url = DeleteSelector.attr('id');
+                $.get(url, function (res) {
+                    Command: toastr["success"]("Operation Successfully Performed!")
+                    toastr.options = {
+                        "closeButton": false,
+                        "debug": false,
+                        "newestOnTop": false,
+                        "progressBar": true,
+                        "positionClass": "toast-top-right",
+                        "preventDuplicates": false,
+                        "onclick": null,
+                        "showDuration": "300",
+                        "hideDuration": "1000",
+                        "timeOut": "5000",
+                        "extendedTimeOut": "1000",
+                        "showEasing": "swing",
+                        "hideEasing": "linear",
+                        "showMethod": "fadeIn",
+                        "hideMethod": "fadeOut"
+                    }
+                    var GenericButtonSelecor = "#" + res;
+                    $(GenericButtonSelecor).click();
+                });
+            }
+            else {
+                return false;
+            }
+        }
+
+
+
+
+
+    </script>
+    @await RenderSectionAsync("Scripts", required: false)
+</body>
+</html>

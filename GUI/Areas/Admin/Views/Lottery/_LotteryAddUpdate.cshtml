@@ -1,0 +1,108 @@
+﻿@model Infrastructure.ViewModels.LotteryCreateVM
+<div class="modal-dialog">
+    <div class="modal-content">
+        <div class="modal-header">
+            <button aria-hidden="true" data-dismiss="modal" class="close" type="button">×</button>
+            @if (Model.Id > 0)
+            {
+                <h4 class="modal-title">
+                    Edit Lottery
+                </h4>
+            }
+            else
+            {
+                <h4 class="modal-title">
+                    Add Lottery
+                </h4>
+            }
+        </div>
+        <div class="modal-body">
+            <div class="row">
+
+                <form id="GenericForm" method="post" asp-area="Admin" asp-controller="Lottery" asp-action="LotteryAddUpdate" data-ajax="true" data-ajax-begin="OnBegin" data-ajax-success="OnSuccess" data-ajax-failure="OnFailure" enctype="multipart/form-data">
+                    @if (Model.Id > 0)
+                    {
+                        @Html.HiddenFor(p=>p.Id)
+                        @Html.HiddenFor(p=>p.LotteryImg)
+                    }
+
+                    <div class="col-sm-6">
+                        <div class="form-group">
+                            <label class="control-label">Lotter Name</label>
+                            <input asp-for="Name" class="form-control">
+                            <span asp-validation-for="Name" class="label label-danger"></span>
+                        </div>
+                    </div>
+                    <div class="col-sm-6">
+                        <div class="form-group">
+                            <label class="control-label">Lotter Reward Price</label>
+                            <input asp-for="RewardPrice" class="form-control">
+                            <span asp-validation-for="RewardPrice" class="label label-danger"></span>
+                        </div>
+                    </div>
+                    <div class="col-sm-6">
+                        <div class="form-group">
+                            <label class="control-label">Lotter Token Limit</label>
+                            <input asp-for="TokenLimit" class="form-control">
+                            <span asp-validation-for="TokenLimit" class="label label-danger"></span>
+                        </div>
+                    </div>
+
+                    <div class="col-sm-6">
+                        @if (Model.Id > 0)
+                        {
+                            <div class="form-group">
+                                <label class="control-label">Lottery Imgage</label>
+                                <input asp-for="TempLotteryImg" class="form-control">
+                                <span asp-validation-for="TempLotteryImg" class="label label-danger"></span>
+                            </div>
+                        }
+                        else
+                        {
+                            <div class="form-group">
+                                <label class="control-label">Lottery Imgage</label>
+                                <input asp-for="LotteryImg" class="form-control">
+                                <span asp-validation-for="LotteryImg" class="label label-danger"></span>
+                            </div>
+                        }
+                    </div>
+                    <div class="col-sm-12">
+                        <div class="form-group">
+                            <label class="control-label">Lottery Description</label>
+                            <input asp-for="Description" class="form-control">
+                            <span asp-validation-for="Description" class="label label-danger"></span>
+                        </div>
+                    </div>
+                    @*<div class="col-sm-6">
+                        <div class="form-group">
+                            <label class="control-label">Lotter Expiry Date</label>
+                            <input asp-for="ExpiryDate" class="form-control">
+                            <span asp-validation-for="ExpiryDate" class="label label-danger"></span>
+                        </div>
+                    </div>*@
+                    @if (Model.Id > 0 && Model.LotteryImgName != "temp.webp")
+                    {
+                        <div class="col-sm-6">
+                            <div class="form-group">
+                                <label class="control-label">Old Lottery Picture</label>
+                                <img width="100" height="100" src="~/LotteryFiles/LotteryImages/@Model.LotteryImgName">
+                            </div>
+                        </div>
+                    }
+                </form>
+
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-light-primary font-weight-bold" data-dismiss="modal">Close</button>
+                <button type="button" onclick="SubmitForm()" id="SubmitButttonId" class="btn btn-primary font-weight-bold">Submit</button>
+            </div>
+        </div>
+    </div>
+</div>
+<script src="~/lib/jquery-validation/dist/jquery.validate.js"></script>
+<script src="~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.js"></script>
+<script type="text/javascript">
+    $(document).ready(function() {
+        jQuery.validator.unobtrusive.parse("#GenericForm");
+    });
+</script>

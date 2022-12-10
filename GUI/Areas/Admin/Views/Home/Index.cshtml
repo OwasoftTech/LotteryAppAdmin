@@ -1,0 +1,130 @@
+﻿@model Infrastructure.ViewModels.LoginVM
+@{
+    Layout = null;
+}
+<!DOCTYPE html>
+<html lang="en">
+
+<!-- Mirrored from themetrace.com/demo/chain/signin.html by HTTrack Website Copier/3.x [XR&CO'2014], Thu, 27 Jun 2019 08:12:10 GMT -->
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <title>Chain Responsive Bootstrap3 Admin</title>
+
+    <link href="~/chain/css/style.default.css" rel="stylesheet">
+
+    <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+    <script src="js/html5shiv.js"></script>
+    <script src="js/respond.min.js"></script>
+    <![endif]-->
+</head>
+
+<body class="signin">
+
+
+    <section>
+
+        <div class="panel panel-signin">
+            <div class="panel-body">
+                <div class="logo text-center">
+                    <img src="~/chain/images/logo-primary.png" alt="Chain Logo">
+                </div>
+                <br />
+                <h4 class="text-center mb5">Already a Member?</h4>
+                <p class="text-center">Sign in to your account</p>
+
+                <div class="mb30"></div>
+
+                <form id="GenericForm" asp-area="Admin" asp-action="Index" asp-controller="Home" method="post" data-ajax="true" data-ajax-begin="OnBegin" data-ajax-success="OnSuccess" data-ajax-failure="OnFailure">
+                    <div class="input-group mb15">
+                        <span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
+                        <input asp-for="Username" class="form-control" placeholder="Username">
+                        <span asp-validation-for="Username" class="label label-danger"></span>
+
+                    </div><!-- input-group -->
+                    <div class="input-group mb15">
+                        <span class="input-group-addon"><i class="glyphicon glyphicon-lock"></i></span>
+                        <input asp-for="Password" type="password" class="form-control" placeholder="Password">
+                        <span asp-validation-for="Password" class="label label-danger"></span>
+                    </div><!-- input-group -->
+
+                    <div class="clearfix">
+                        <div class="pull-left">
+                            <div class="ckbox ckbox-primary mt10">
+                                <input type="checkbox" id="rememberMe" value="1">
+                                <label for="rememberMe">Remember Me</label>
+                            </div>
+                        </div>
+                        <div class="pull-right">
+                            <button type="submit" class="btn btn-success" id="signinBtn">Sign In <i class="fa fa-angle-right ml5"></i></button>
+                        </div>
+                    </div>
+                    <div class="clearfix mt-5">
+                        <div  id="loginResult">
+                        </div>
+                    </div>
+
+                </form>
+
+            </div><!-- panel-body -->
+            <div class="panel-footer">
+                <a class="btn btn-primary btn-block">Not yet a Member? Create Account Now</a>
+            </div><!-- panel-footer -->
+        </div><!-- panel -->
+    </section>
+    <script src="~/chain/js/jquery-1.11.1.min.js"></script>
+    <script src="~/chain/js/jquery-migrate-1.2.1.min.js"></script>
+    <script src="~/chain/js/bootstrap.min.js"></script>
+    <script src="~/chain/js/modernizr.min.js"></script>
+    <script src="~/chain/js/pace.min.js"></script>
+    <script src="~/chain/js/retina.min.js"></script>
+    <script src="~/chain/js/jquery.cookies.js"></script>
+
+    <script src="~/chain/js/custom.js"></script>
+    <script src="~/js/jquery.unobtrusive-ajax.js"></script>
+    <script src="~/lib/jquery-validation/dist/jquery.validate.js"></script>
+    <script src="~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.js"></script>
+    <script type="text/javascript">
+        $(document).ready(function() {
+            jQuery.validator.unobtrusive.parse("#GenericForm");
+        });
+    </script>
+    <script>
+
+        function OnBegin() {
+            $('#signinBtn').html('<i class="fa fa-spinner fa-spin"></i>');
+            $('#signinBtn').prop('disabled', true);
+        }
+        function OnSuccess(res) {
+            if (res == "success") {
+                $('#loginResult').html('<div class="alert alert-success"><strong>Login Seccess!</strong></div>');
+                $('#signinBtn').html('Sign In <i class="fa fa-angle-right ml5"></i>');
+                $('#signinBtn').prop('disabled', false);
+                 setTimeout(function() {
+                    window.location.href = '/Admin/Main/Index';
+                }, 2000);               
+            }
+            else {
+                $('#signinBtn').html('Sign In <i class="fa fa-angle-right ml5"></i>');
+                $('#signinBtn').prop('disabled', false);
+                $('#loginResult').html('<div class="alert alert-danger"><strong>Username or Pawword incorrect!</strong></div>');
+                setTimeout(function() {
+                    $('#loginResult').html("");
+                }, 2000);
+            }
+        }
+        function OnFailure() {
+            $('#signinBtn').html('Sign In <i class="fa fa-angle-right ml5"></i>');
+            $('#signinBtn').prop('disabled', false);
+            alert("someting Went wrong")
+        }
+    </script>
+
+</body>
+
+<!-- Mirrored from themetrace.com/demo/chain/signin.html by HTTrack Website Copier/3.x [XR&CO'2014], Thu, 27 Jun 2019 08:12:10 GMT -->
+</html>

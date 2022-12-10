@@ -1,0 +1,54 @@
+﻿<div class="pageheader">
+    <div class="media">
+        <div class="pageicon pull-left">
+            <i class="fa fa-th-list"></i>
+        </div>
+        <div class="media-body">
+            <ul class="breadcrumb">
+                <li><a asp-area="admin" asp-controller="Home" asp-action="Index"><i class="glyphicon glyphicon-home"></i></a></li>
+                <li>Lottery</li>
+                <li>Lottries</li>
+            </ul>
+            <h4>Lottries</h4>
+        </div>
+    </div><!-- media -->
+</div>
+<div class="contentpanel">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="well mt10">
+                <div class="row">
+                    <div class="col-sm-9">
+                        <input id="GenericPagingSearchInput" type="text" placeholder="What are you looking for?" class="form-control">
+                    </div>
+                    <div class="col-sm-3">
+                        <button class="btn btn-primary btn-metro" id="btnGenericPagingSearch">
+                            <i class="fa  fa-search"></i>
+                        </button>
+                        <button id="/Admin/Lottery/LotteryAddUpdate?id=0" class="GenericAddEntity btn btn-primary btn-metro">
+                            <i class="fa fa-plus"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <div id="LotteryResultDiv">
+            </div>
+        </div>
+    </div>
+</div>
+<button id="LotteryPartialButton" style="display:none;"></button>
+<input hidden id="PagingDataUpdatingDiv" value="LotteryResultDiv" />
+@section Scripts
+    {
+    <script>
+        $(document).ready(function () {
+            $('#LotteryPartialButton').click();
+        });
+        $('#LotteryPartialButton').click(function () {
+            $.get("/Admin/Lottery/LotteryPartial", function (res) {
+                $('#LotteryResultDiv').html(res);
+            });
+        });
+    </script>
+}

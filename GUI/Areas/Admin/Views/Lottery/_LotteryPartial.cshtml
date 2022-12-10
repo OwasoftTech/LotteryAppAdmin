@@ -1,0 +1,181 @@
+﻿@model Infrastructure.Utilities.PagingModel<Infrastructure.ViewModels.LotteryVM>
+<input id="GenericPagingDataUrl" value="/Admin/Lottery/LotteryPartial" type="hidden" />
+<div class="table-responsive">
+    <table class="table table-primary table-striped mb30" id="">
+        <thead>
+            <tr>
+                <th>#</th>
+                <th>Img</th>
+                <th>Name</th>
+                <th>Token Limit</th>
+                <th>Reward Price</th>
+                <th>Total Applied User</th>
+                @*<th>Expriry Date</th>*@
+                <th>Description</th>
+                <th>
+                    Is open?
+                </th>
+                <th class="text-right">Action</th>
+            </tr>
+        </thead>
+        <tbody>
+            @if (Model.Data != null && Model.Data.Count() > 0)
+            {
+                int index = 1;
+                foreach (var item in Model.Data)
+                {
+                    <tr>
+                        <td>
+                            <span class="badge badge-primary">@index</span>
+                        </td>
+                        <td>                         
+                            <div class="pull-left">
+                                <img width="55" height="55" class="img-circle img-online" src="@item.LotteryImgPath" alt="not Uploaded">
+                            </div>
+                        </td>
+                        <td>@item.Name</td>
+                        <td>
+                            @item.TokenLimit
+                        </td>
+                        <td>
+                            @item.RewardPrice
+                        </td>
+                        <td>
+                            @item.TotalApplied
+                        </td>
+                        @*<td>
+                            @item.ExpiryDate
+                        </td>*@
+                        <td>
+                            @item.Description
+                        </td>
+                        <td>
+                            @if (item.IsOpened)
+                            {
+                                <span class="label label-success">Opened</span>
+                            }
+                            else
+                            {
+                                <span class="label label-warning">Not Opened</span>
+                            }
+                        </td>
+                        <td class="text-right">
+                            <button class="btn btn-xs btn-success" onclick="GenericEdit(this)" id="/Admin/Lottery/LotteryAddUpdate?id=@item.Id">
+                                <i class="fa fa-pencil"></i>
+                            </button>
+                            |
+                            <button class="btn btn-xs btn-danger" onclick="GenericDelete(this)" id="/Admin/Lottery/LotteryDelete?id=@item.Id">
+                                <i class="fa fa-trash-o"></i>
+                            </button>
+                        </td>
+                    </tr>
+                    index++;
+                }
+            }
+        </tbody>
+    </table>
+</div><!-- table-responsive -->
+<div class="alert alert-info">
+    <div class="row">
+        <div class="col-md-10">
+            <ul class="pagination pagination-split pagination-circled nomargin">
+
+                @if (Model.PageIndex > 1)
+                {
+                    <li class="disabled">
+                        <a onclick="GetDataByPage(1)" href="#"><i class="fa fa-angle-left"></i></a>
+                    </li>
+                }
+                else
+                {
+                    <li class="disabled"><a href="#"><i class="fa fa-angle-left"></i></a></li>
+                }
+                @{
+                    var currentPage = Model.PageIndex;
+                    var pageCount = Model.RecordCount / Model.PageSize;
+                    int remainder = Model.RecordCount % Model.PageSize;
+                    if (remainder > 0)
+                    {
+                        pageCount = pageCount + 1;
+                    }
+                    // How many pages views right or left of currentPage
+                    const int PageLeft = 2;
+                    const int PagesRight = 2;
+
+                    // get first page befor ...
+                    var fromPage = Math.Max(1, currentPage - PageLeft);
+
+                    // get last page after ...
+                    var toPage = Math.Min(pageCount, currentPage + PagesRight);
+
+                    if (pageCount - toPage == 1)
+                    {
+                        toPage = pageCount;
+                    }
+
+                    if (fromPage > 1)
+                    {
+                    // view First page
+                        <li><a href="#" onclick="GetDataByPage(1)">1</a></li>
+                        if (fromPage > 2)
+                        {
+                            // view first ...
+                            // calculate number page for link ..., it's middle between first page and fromPage
+                            var middleNumber = (int)Math.Ceiling((double)(fromPage - 2) / 2) + 1;
+                            <li><a href="#" onclick="GetDataByPage(@middleNumber)">...</a></li>
+                        }
+                    }
+                    // view paginator between currentPage
+                    for (int i = fromPage; i <= toPage; i++)
+                    {
+                        if (currentPage == i)
+                        {
+                            <li class="active"><a href="#" onclick="GetDataByPage(@i)">@i</a></li>
+                        }
+                        else
+                        {
+                            <li><a href="#" onclick="GetDataByPage(@i)">@i</a></li>
+                        }
+                    }
+                    // view second ...
+                    if (toPage < pageCount)
+                    {
+                        int middleNumber = (int)Math.Ceiling((double)(pageCount - toPage) / 2) + toPage;
+                        <li><a href="#" onclick="GetDataByPage(@middleNumber)">...</a></li>
+                        // view last page
+                        if (toPage < pageCount - 1)
+                        {
+                            <li><a href="#" onclick="GetDataByPage(@pageCount)">@pageCount</a></li>
+                        }
+                    }
+
+                    @if (Model.PageIndex < pageCount)
+                    {
+                        <li><a href="#" onclick="GetDataByPage(@Model.PageIndex + 1)"><i class="fa fa-angle-right"></i></a></li>
+                    }
+                    else
+                    {
+                        <li class="disabled"><a href="#"><i class="fa fa-angle-right"></i></a></li>
+                    }
+
+
+                }
+            </ul>
+            <br />
+            <span class="text-muted">Displaying 10 of @Model.RecordCount records</span>
+        </div>
+        <div class="col-md-2">
+            <div class="d-flex align-items-center">
+                <select id="GenericPageItemDropdown" asp-for="@Model.PageSize" onchange="UpdatePagingData()" class="form-control form-control-sm text-primary font-weight-bold mr-4 border-0 bg-light-primary" style="width: 75px;">
+                    <option value="5">5</option>
+                    <option value="10">10</option>
+                    <option value="20">20</option>
+                    <option value="30">30</option>
+                    <option value="40">40</option>
+                    <option value="50">50</option>
+                </select>
+            </div>
+        </div>
+    </div>
+</div>
+

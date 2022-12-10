@@ -1,0 +1,82 @@
+﻿@model IEnumerable<Infrastructure.ViewModels.DashboardCountVM>
+@{
+    int classcheck = 1;
+}
+<div class="pageheader">
+    <div class="media">
+        <div class="pageicon pull-left">
+            <i class="fa fa-home"></i>
+        </div>
+        <div class="media-body">
+            <ul class="breadcrumb">
+                <li><a href="#"><i class="glyphicon glyphicon-home"></i></a></li>
+                <li>Dashboard</li>
+            </ul>
+            <h4>Dashboard</h4>
+        </div>
+    </div><!-- media -->
+</div><!-- pageheader -->
+<div class="contentpanel">
+    <div class="row row-stat">
+
+        @if (Model != null && Model.Count() > 0)
+        {
+            foreach (var item in Model)
+            {
+                <div class="col-md-4">
+                    @if (classcheck == 1)
+                    {
+                        <div class="panel panel-success-alt noborder">
+                            <div class="panel-heading noborder">
+                                <div class="panel-icon"><i class="fa  fa-star"></i></div>
+                                <div class="media-body">
+                                    <h5 class="md-title nomargin">@item.Name</h5>
+                                    <h1 class="mt5">@item.TotalCounts</h1>
+                                </div><!-- media-body -->
+                               
+                            </div><!-- panel-body -->
+                        </div>
+                    }
+                    else if (classcheck == 2)
+                    {
+                        <div class="panel panel-primary noborder">
+                            <div class="panel-heading noborder">
+                                <div class="panel-icon"><i class="fa  fa-star"></i></div>
+                                <div class="media-body">
+                                    <h5 class="md-title nomargin">@item.Name</h5>
+                                    <h1 class="mt5">@item.TotalCounts</h1>
+                                </div><!-- media-body -->
+                                
+                            </div><!-- panel-body -->
+                        </div>
+                    }
+                    else
+                    {
+                        <div class="panel panel-dark noborder">
+                            <div class="panel-heading noborder">
+                                <div class="panel-icon"><i class="fa  fa-star"></i></div>
+                                <div class="media-body">
+                                    <h5 class="md-title nomargin">@item.Name</h5>
+                                    <h1 class="mt5">@item.TotalCounts</h1>
+                                </div><!-- media-body -->
+                                
+                            </div><!-- panel-body -->
+                        </div>
+                    }
+                    @{
+                        if(classcheck == 3)
+                        {
+                            classcheck = 1;
+                        }
+                        else
+                        {
+                            classcheck++;
+                        }
+
+                    }
+                </div>
+                <!-- col-md-4 -->
+            }
+        }
+    </div><!-- row -->
+</div><!-- contentpanel -->

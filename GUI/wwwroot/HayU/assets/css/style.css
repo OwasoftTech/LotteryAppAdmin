@@ -1,0 +1,275 @@
+* {
+    font-weight: normal;
+}
+/* navbar */
+.logo {
+    width: 90.75px;
+    height: 33.75px;
+}
+/* navbar end */
+
+/* section1 */
+.heynav {
+    font-size: 13.50px !important;
+}
+.back {
+    background-image: url("../img/background/rectangle_3.webp");
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+.fontsizech {
+    width: 309.75px;
+    font-size: 54px;
+}
+.withheyu {
+    font-size: 21px;
+    width: 500.50px !important;
+}
+.phoneimg img {
+    width: 425px !important;
+    height: 695.75px !important;
+    margin-top: 150.75px;
+}
+.downloadbtn {
+    border-radius: 18.75px !important;
+    box-shadow: 0px 7.50px 30px 0px #26363636;
+    width: 168px;
+    height: 37.50px;
+    background: linear-gradient(#eb402c, #d90647);
+    -webkit-text-fill-color: transparent;
+    -webkit-background-clip: text;
+}
+.downloadbtnmain {
+    border-radius: 18.75px !important;
+    box-shadow: 0px 7.50px 30px 0px #26363636;
+}
+/* section1 end*/
+/* section2*/
+.groupimg {
+    width: 532.25px;
+    height: 577.50px;
+}
+.groupimg1 {
+    width: 500px;
+    height: 677.50px;
+}
+/* section2 end*/
+/* section4 */
+.linkcom {
+    background: linear-gradient(#eb402c, #d90647);
+    -webkit-text-fill-color: transparent;
+    -webkit-background-clip: text;
+}
+.dolor:hover {
+    border: none;
+    box-shadow: 5px 7px 20px 0px #26363636 !important;
+}
+.trianglebtm {
+    border-left: 10px solid transparent;
+    border-right: 10px solid transparent;
+    border-top: 10px solid transparent;
+}
+.dolor:hover .trianglebtm {
+    border-top: 10px solid white;
+    width: 7% !important;
+}
+.dolor {
+    color: #808080;
+    border: 1px solid #807c7c3b;
+    height: 180.50px;
+    width: 277px;
+}
+.john {
+    height: 46.50px;
+    width: 46.50px;
+    border-radius: 50%;
+}
+.name {
+    color: #242323a9;
+}
+.ceo {
+    color: #737577a1;
+}
+.offcanvasnavbar1 {
+    background: #d90647;
+    margin-bottom: -2px;
+}
+/* section4 end */
+/* section 5 */
+.rectangle4 {
+    background-image: linear-gradient(#d90647, #eb402c);
+    height: 388px;
+}
+.textcolor {
+    color: rgba(240, 247, 247, 0.473);
+    font-size: 12px;
+}
+.iphonex {
+    margin-top: 26px;
+    width: 321.50px;
+    height: 551px;
+    transform: translateY(-90px);
+    position: absolute;
+    margin-bottom: -90px;
+}
+.overlay {
+    width: 221.00px;
+    height: 391.25px;
+    background-color: hsla(0, 0%, 14%, 0.6);
+    opacity: 1;
+    margin-right: 11px;
+    margin-top: -2px;
+}
+.overlay img {
+    height: 42px;
+    width: 42px;
+}
+/* section 5 end*/
+/* section6*/
+.Subscribe {
+    border-radius: 18.75px !important;
+    box-shadow: 0px 7.50px 30px 0px #26363636;
+    width: 168px;
+    height: 37.50px;
+    background: linear-gradient(#eb402c, #d90647);
+    transform: translatex(-90px);
+    margin-right: -90px;
+}
+.emailsearch {
+    width: 428.25px !important;
+    border-radius: 18.75px !important;
+    background-color: #f8f8f8 !important;
+}
+.content1 {
+
+    color: #808080e8;
+    text-align: justify !important;
+}
+.download{
+    margin-top: 100px;
+    margin-bottom: 100px;
+}
+/* section6 end*/
+/* section7 */
+.logoicon {
+    height: 120px;
+    aspect-ratio: 1;
+}
+.appstore {
+    height: 45px;
+}
+/* section7 end */
+/* footer section */
+.btnlanguage {
+    background-color: #f8f8f8 !important;
+    height: 37.50px;
+    width: 150px;
+    border-radius: 18.75px !important;
+}
+/* footer section end */
+
+/* content in all sections */
+.content {
+    color: #808080e8;
+
+}
+/* content in all sections */
+
+/* icons */
+.iconss1 {
+    width: 36px;
+    height: 33px;
+    margin-left: 15px;
+}
+.iconss2 {
+    width: 36px;
+    height: 36.75px;
+    margin-left: 15px;
+}
+.iconss3 {
+    width: 36px;
+    height: 30px;
+    margin-right: 15px;
+}
+.iconss4 {
+    width: 36px;
+    height: 24px;
+    margin-right: 15px;
+}
+/* icons end*/
+
+.easymsg1 {
+    font-size: 45px !important;
+}
+.dotcolor {
+    color: red;
+}
+
+.lin {
+    color: #af9d9db2;
+}
+
+/* Media quries */
+@media screen and (max-width:676.5px) {
+
+    .groupimg1,
+    .groupimg {
+        width: 80%;
+    }
+}
+@media screen and (max-width:580.5px) {
+    .phoneimg img {
+        width: 100% !important;
+    }
+
+    .groupimg1,
+    .groupimg {
+        width: 100%;
+    }
+
+    .emailsearch {
+        width: 70% !important;
+    }
+
+    .Subscribe {
+        width: 30% !important;
+    }
+
+}
+@media screen and (max-width: 425px) {
+
+    .phoneimg img,
+    .groupimg,
+    .groupimg1 {
+        height: 500px !important;
+    }
+
+    .back {
+        height: 915px;
+    }
+
+
+}
+@media screen and (max-width: 991.9px) {
+    .phoneimg img {
+        margin-top: 30px;
+    }
+    .fontsizech,
+    .withheyu,
+    .heynav {
+        width: 100% !important;
+    }
+
+    .iphonex {
+        position: relative;
+    }
+
+    .rectangle4 {
+        height: auto;
+    }
+
+    .makecall {
+        text-align: left;
+    }
+}
+/* media quries end */

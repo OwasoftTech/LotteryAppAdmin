@@ -1,0 +1,64 @@
+﻿<div class="pageheader">
+    <div class="media">
+        <div class="pageicon pull-left">
+            <i class="fa fa-th-list"></i>
+        </div>
+        <div class="media-body">
+            <ul class="breadcrumb">
+                <li><a asp-area="admin" asp-controller="Home" asp-action="Index"><i class="glyphicon glyphicon-home"></i></a></li>
+                <li>Accounts</li>
+                <li>Roles</li>
+            </ul>
+            <h4>User Roles</h4>
+        </div>
+    </div><!-- media -->
+</div>
+<div class="contentpanel">
+
+    <div class="row">
+        <div class="col-md-12">
+            <div class="well mt10">
+                <div class="row">
+                    <div class="col-sm-9">
+                        <input id="GenericPagingSearchInput" type="text" placeholder="What are you looking for?" class="form-control">
+                    </div>
+                    <div class="col-sm-3">
+                        <button class="btn btn-primary btn-metro" id="btnGenericPagingSearch">
+                            <i class="fa  fa-search"></i>
+                        </button>
+                        <button id="/Admin/Account/UserRoleAddUpdate?id=0" class="GenericAddEntity btn btn-primary btn-metro">
+                            <i class="fa fa-plus"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <div id="UserRolesResultDiv">
+            </div>
+        </div>
+    </div>
+</div>
+<button id="UserRolePartialButton" style="display:none;"></button>
+<input hidden id="PagingDataUpdatingDiv" value="UserRolesResultDiv" />
+@section Scripts
+    {
+    <script>
+        $(document).ready(function () {
+            $('#UserRolePartialButton').click();
+        });
+        $('#UserRolePartialButton').click(function () {
+            $.get("/Admin/Account/UserRolesPartial", function (res) {
+                $('#UserRolesResultDiv').html(res);
+            });
+        });
+
+    </script>
+    <script>
+        $(".pagingDropdownClass").change(function () {
+            debugger
+            var end = this.value;
+            alert(end);
+        });
+    </script>
+
+}
