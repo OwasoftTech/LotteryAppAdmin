@@ -336,21 +336,21 @@
         //        });
         //    }, 10000);
         //});
-        $(document).ready(function() {
-            setInterval(function MantenerVivo() {
-                $.ajax({
-                    type: "GET",
-                    url: "/Admin/Main/SyncSession",
-                    dataType: "json",
-                    success: function(response) {
-                        //alert(response);
-                    },
-                    failure: function(response) {
-                        //alert("Por favor, pongase en contacto conmigo....");
-                    }
-                });
-            }, 5000); //Set interval in miliseconds, 4 minutes = 240000
-        });
+        //$(document).ready(function() {
+        //    setInterval(function MantenerVivo() {
+        //        $.ajax({
+        //            type: "GET",
+        //            url: "/Admin/Main/SyncSession",
+        //            dataType: "json",
+        //            success: function(response) {
+        //                //alert(response);
+        //            },
+        //            failure: function(response) {
+        //                //alert("Por favor, pongase en contacto conmigo....");
+        //            }
+        //        });
+        //    }, 5000); //Set interval in miliseconds, 4 minutes = 240000
+        //});
     </script>
     @await RenderSectionAsync("Scripts", required: false)
 </body>
