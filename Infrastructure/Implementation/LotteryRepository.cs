@@ -20,7 +20,7 @@ namespace Infrastructure.Implementation
         private LotteryAppDBContext _context;
         private string _ConnectionString;
 
-        public LotteryRepository(IGenericRepository genericRepository, LotteryAppDBContext context , IConfiguration config)
+        public LotteryRepository(IGenericRepository genericRepository, LotteryAppDBContext context, IConfiguration config)
         {
             _genericRepository = genericRepository;
             _context = context;
@@ -57,6 +57,7 @@ namespace Infrastructure.Implementation
                     RewardPrice = Entity.RewardPrice,
                     TokenLimit = Entity.TokenLimit,
                     Description = Entity.Description,
+                    IsRecursive = Entity.IsRecursive,
                 };
             }
         }
@@ -72,7 +73,8 @@ namespace Infrastructure.Implementation
                 LotteryImgName = model.LotteryImgName,
                 RewardPrice = model.RewardPrice,
                 TokenLimit = model.TokenLimit,
-                Description = model.Description
+                Description = model.Description,
+                IsRecursive = model.IsRecursive
             };
             return await _genericRepository.Create(Entity);
         }
@@ -91,6 +93,7 @@ namespace Infrastructure.Implementation
                 Entity.RewardPrice = model.RewardPrice;
                 Entity.TokenLimit = model.TokenLimit;
                 Entity.Description = model.Description;
+                Entity.IsRecursive = model.IsRecursive;
                 if (model.LotteryImgName != null)
                 {
                     Entity.LotteryImgName = model.LotteryImgName;

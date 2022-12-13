@@ -73,12 +73,22 @@
                             <span asp-validation-for="Description" class="label label-danger"></span>
                         </div>
                     </div>
-                    @*<div class="col-sm-6">
+                    <div class="col-sm-12">
                         <div class="form-group">
-                            <label class="control-label">Lotter Expiry Date</label>
-                            <input asp-for="ExpiryDate" class="form-control">
-                            <span asp-validation-for="ExpiryDate" class="label label-danger"></span>
+                            <label class="col-sm-3 control-label">Is Recursive</label>
+                            <div class="col-sm-9">
+                                <input asp-for="IsRecursive" class="form-control">
+                                <span asp-validation-for="IsRecursive"  class="label label-danger"></span>
+                            </div><!-- col-sm-8 -->
                         </div>
+
+                    </div>
+                    @*<div class="col-sm-6">
+                    <div class="form-group">
+                    <label class="control-label">Lotter Expiry Date</label>
+                    <input asp-for="ExpiryDate" class="form-control">
+                    <span asp-validation-for="ExpiryDate" class="label label-danger"></span>
+                    </div>
                     </div>*@
                     @if (Model.Id > 0 && Model.LotteryImgName != "temp.webp")
                     {

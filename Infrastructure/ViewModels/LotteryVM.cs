@@ -20,6 +20,7 @@ namespace Infrastructure.ViewModels
         public string LotteryImgPath { get; set; }
         public string Description { get; set; } = null!;
         public int TotalApplied { get; set; }
+        public bool IsRecursive { get; set; }
     }
     public class LotteryCreateVM
     {
@@ -40,6 +41,7 @@ namespace Infrastructure.ViewModels
         public string? LotteryImgName { get; set; } = null;
         [Required(ErrorMessage = "Lottery Description is required!")]
         public string? Description { get; set; } = null;
+        public bool IsRecursive { get; set; }
     }
     public class EnroleLotteryVM
     {

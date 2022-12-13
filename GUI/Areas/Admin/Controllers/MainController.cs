@@ -17,5 +17,9 @@ namespace GUI.Areas.Admin.Controllers
         {
             return View(await _setupRepository.DashboardCount());
         }
+        public IActionResult SyncSession()
+        {
+            return Json("success");
+        }
     }
 }

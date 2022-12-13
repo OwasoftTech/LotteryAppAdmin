@@ -10,6 +10,7 @@
                 <th>Token Limit</th>
                 <th>Reward Price</th>
                 <th>Total Applied User</th>
+                <th>is Recursive</th>
                 @*<th>Expriry Date</th>*@
                 <th>Description</th>
                 <th>
@@ -28,7 +29,7 @@
                         <td>
                             <span class="badge badge-primary">@index</span>
                         </td>
-                        <td>                         
+                        <td>
                             <div class="pull-left">
                                 <img width="55" height="55" class="img-circle img-online" src="@item.LotteryImgPath" alt="not Uploaded">
                             </div>
@@ -43,9 +44,19 @@
                         <td>
                             @item.TotalApplied
                         </td>
+                        <td>
+                            @if (item.IsRecursive)
+                            {
+                                <span class="label label-success">Yes</span>
+                            }
+                            else
+                            {
+                                <span class="label label-warning">No</span>
+                            }
+                        </td>
                         @*<td>
-                            @item.ExpiryDate
-                        </td>*@
+                @item.ExpiryDate
+                </td>*@
                         <td>
                             @item.Description
                         </td>

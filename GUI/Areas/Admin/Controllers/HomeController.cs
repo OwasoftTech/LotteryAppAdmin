@@ -9,10 +9,12 @@ namespace GUI.Areas.Admin.Controllers
     public class HomeController : Controller
     {
         private ISetupRepository _setupRepository;
+        private IHttpContextAccessor _httpContextAccessor;
 
-        public HomeController(ISetupRepository setupRepository)
+        public HomeController(ISetupRepository setupRepository , IHttpContextAccessor  httpContextAccessor)
         {
             _setupRepository = setupRepository;
+            _httpContextAccessor = httpContextAccessor;
         }
         public IActionResult Index()
         {
@@ -26,7 +28,8 @@ namespace GUI.Areas.Admin.Controllers
                 var result =await _setupRepository.Login(model);
                 if(result != null)
                 {
-                    HttpContext.Session.SetInt32("UserId", result.Id);
+                    _httpContextAccessor.HttpContext.Session.SetInt32("UserId", result.Id);
+                    //HttpContext.Session.SetInt32("UserId", result.Id);
                     return Json("success");
                 }
                 else
@@ -39,7 +42,8 @@ namespace GUI.Areas.Admin.Controllers
         }
         public IActionResult Logout()
         {
-            HttpContext.Session.Remove("UserId");
+            _httpContextAccessor.HttpContext.Session.Remove("UserId");
+            //HttpContext.Session.Remove("UserId");
             return RedirectToAction("Index", new { Controller = "Home", Area = "Admin" });
         }
     }

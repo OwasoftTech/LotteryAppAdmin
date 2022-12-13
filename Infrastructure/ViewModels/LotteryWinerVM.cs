@@ -13,6 +13,7 @@ namespace Infrastructure.ViewModels
         public string AppUserName { get; set; }
         public decimal RewardPrice { get; set; }
         public string CountryCode { get; set; }
+        public string Phone { get; set; }
         public string ProfilePicUrl { get; set; }
         public string LotteryName { get; set; }
         public DateTime WinningDate { get; set; }

@@ -31,7 +31,7 @@ namespace GUI
             services.AddDbContext<LotteryAppDBContext>(p => p.UseSqlServer(Configuration.GetConnectionString("LotteryAppDatabase")));
             ServiceModule.Regsiter(services);
             services.AddControllers();
-
+            services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
             // Register the Swagger generator, defining 1 or more Swagger documents
             services.AddSwaggerGen();
             //services.AddSwaggerGen(c =>
@@ -52,12 +52,19 @@ namespace GUI
             services.AddHttpContextAccessor();
             services.AddSession(options => {
                 options.Cookie.IsEssential = true;
+                options.IdleTimeout = TimeSpan.FromHours(11);
+                options.Cookie.HttpOnly = true;
             });
             services.Configure<CookiePolicyOptions>(options =>
             {
                 // This lambda determines whether user consent for non-essential cookies is needed for a given request.
                 options.CheckConsentNeeded = context => true;
                 options.MinimumSameSitePolicy = SameSiteMode.None;
+            });
+            services.ConfigureApplicationCookie(options =>
+            {
+                options.ExpireTimeSpan = TimeSpan.FromDays(2);
+                options.SlidingExpiration = true;
             });
         }
 

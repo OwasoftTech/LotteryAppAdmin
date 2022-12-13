@@ -43,12 +43,13 @@ namespace GUI.Controllers
                 var Result = await _appUserRepository.AppUserSignUp(model);
                 if(Result == true)
                 {
+                    var CreatedUser = await _appUserRepository.AppUserSignIn(new AppUserSignin() { CountryCode = model.CountryCode, Phone = model.Phone });
                     var SuccessResponse = new ResponseModel()
                     {
                         Message = "User Successfully Signup!",
                         Status = ReasonPhrases.GetReasonPhrase(StatusCodes.Status200OK),
                         StatusCode = StatusCodes.Status200OK,
-                        Data = model
+                        Data = CreatedUser
                     };
                     return new JsonResult(SuccessResponse);
                 }

@@ -18,5 +18,6 @@ namespace DbModels
         public bool IsDeleted { get; set; }
         public string LotteryImgName { get; set; }
         public string Description { get; set; }
+        public bool IsRecursive { get; set; }
     }
 }
