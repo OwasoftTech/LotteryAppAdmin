@@ -18,7 +18,7 @@ namespace GUI.Controllers
         private IAppUserRepository _appUserRepository;
         private IWebHostEnvironment _hostEnvironment;
 
-        public AppUserController(IAppUserRepository appUserRepository , IWebHostEnvironment hostEnvironment)
+        public AppUserController(IAppUserRepository appUserRepository, IWebHostEnvironment hostEnvironment)
         {
             _appUserRepository = appUserRepository;
             _hostEnvironment = hostEnvironment;
@@ -27,10 +27,10 @@ namespace GUI.Controllers
         [Route("AppUserSignup")]
         public async Task<IActionResult> AppUserSignUp([FromBody] AppUserSignUpVM model)
         {
-            if(ModelState.IsValid)
+            if (ModelState.IsValid)
             {
-                var AlreadyExit = await _appUserRepository.AppUserSignIn(new AppUserSignin() {  CountryCode = model.CountryCode , Phone = model.Phone});
-                if(AlreadyExit.Id > 0 )
+                var AlreadyExit = await _appUserRepository.AppUserSignIn(new AppUserSignin() { CountryCode = model.CountryCode, Phone = model.Phone });
+                if (AlreadyExit.Id > 0)
                 {
                     var SuccessResponse = new ResponseModel()
                     {
@@ -41,7 +41,7 @@ namespace GUI.Controllers
                     return new JsonResult(SuccessResponse);
                 }
                 var Result = await _appUserRepository.AppUserSignUp(model);
-                if(Result == true)
+                if (Result == true)
                 {
                     var CreatedUser = await _appUserRepository.AppUserSignIn(new AppUserSignin() { CountryCode = model.CountryCode, Phone = model.Phone });
                     var SuccessResponse = new ResponseModel()
@@ -76,14 +76,14 @@ namespace GUI.Controllers
         [Route("AppUserUpdate")]
         public async Task<IActionResult> AppUserUpdate([FromBody] AppUserUpdateTempVM model)
         {
-            if(ModelState.IsValid)
+            if (ModelState.IsValid)
             {
                 var DbVm = new AppUserUpdateVM
                 {
                     Id = model.Id,
                     Name = model.Name,
                 };
-                if (model.PhotoExtension != null && model.PhotoArry != null && model.PhotoArry.Length >0)
+                if (model.PhotoExtension != null && model.PhotoArry != null && model.PhotoArry.Length > 0)
                 {
                     var RootPathForFile = _hostEnvironment.WebRootPath + "\\LotteryFiles\\AppUserImages";
                     string TempFileName = @"ProfileImg" + model.PhotoExtension;
@@ -92,8 +92,12 @@ namespace GUI.Controllers
                     FileHandeling.SaveFile(FileUploadPath, model.PhotoArry);
                     DbVm.photoName = FileUniqueName;
                 }
+                else
+                {
+                    DbVm.photoName = null;
+                }
                 var Result = await _appUserRepository.AppUserUpdate(DbVm);
-                if(Result == true)
+                if (Result == true)
                 {
                     var SuccessResponse = new ResponseModel()
                     {
@@ -128,10 +132,10 @@ namespace GUI.Controllers
         [Route("AppUserSignIn")]
         public async Task<IActionResult> AppUserSignIn([FromBody] AppUserSignin model)
         {
-            if(ModelState.IsValid)
+            if (ModelState.IsValid)
             {
                 var Result = await _appUserRepository.AppUserSignIn(model);
-                if(Result != null && Result.Id >0)
+                if (Result != null && Result.Id > 0)
                 {
                     var SuccessResponse = new ResponseModel()
                     {
@@ -187,6 +191,20 @@ namespace GUI.Controllers
                 };
                 return new JsonResult(ErrorResponse);
             }
+        }
+        [HttpGet]
+        [Route("AppUserCount")]
+        public async Task<IActionResult> AppUserCount()
+        {
+            var Result = await _appUserRepository.TotalAppUsers();
+            var SuccessResponse = new ResponseModel()
+            {
+                Message = "Found!",
+                Status = ReasonPhrases.GetReasonPhrase(StatusCodes.Status200OK),
+                StatusCode = StatusCodes.Status200OK,
+                Data = Result
+            };
+            return new JsonResult(SuccessResponse);
         }
     }
 }

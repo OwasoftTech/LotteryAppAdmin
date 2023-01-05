@@ -1,6 +1,8 @@
-﻿using Infrastructure.Interfaces;
+﻿using GUI.Utilities;
+using Infrastructure.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
+
 
 namespace GUI.Areas.Admin.Controllers
 {
@@ -16,10 +18,6 @@ namespace GUI.Areas.Admin.Controllers
         public async Task<IActionResult> Index()
         {
             return View(await _setupRepository.DashboardCount());
-        }
-        public IActionResult SyncSession()
-        {
-            return Json("success");
         }
     }
 }

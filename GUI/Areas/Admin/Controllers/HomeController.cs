@@ -28,8 +28,10 @@ namespace GUI.Areas.Admin.Controllers
                 var result =await _setupRepository.Login(model);
                 if(result != null)
                 {
-                    _httpContextAccessor.HttpContext.Session.SetInt32("UserId", result.Id);
-                    //HttpContext.Session.SetInt32("UserId", result.Id);
+                    //_httpContextAccessor.HttpContext.Session.SetInt32("UserId", result.Id);
+                    HttpContext.Session.SetInt32("UserId", result.Id);
+                    //HttpContext.Session.SetString("UserId", result.Id.ToString());
+
                     return Json("success");
                 }
                 else
@@ -42,8 +44,10 @@ namespace GUI.Areas.Admin.Controllers
         }
         public IActionResult Logout()
         {
-            _httpContextAccessor.HttpContext.Session.Remove("UserId");
+            //HttpContext.Session.Clear();
             //HttpContext.Session.Remove("UserId");
+           _httpContextAccessor.HttpContext.Session.Remove("UserId");
+            HttpContext.Session.Remove("UserId");
             return RedirectToAction("Index", new { Controller = "Home", Area = "Admin" });
         }
     }

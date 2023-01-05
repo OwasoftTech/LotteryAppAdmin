@@ -17,8 +17,8 @@ namespace GUI.Areas.Admin.Controllers
         {
             if (!context.HttpContext.Session.GetInt32("UserId").HasValue)
             {
-                context.Result = new RedirectToRouteResult(
-                      new { area = "Admin", controller = "Home", action = "Index" });
+               // context.Result = new RedirectToRouteResult(
+                 //     new { area = "Admin", controller = "Home", action = "Index" });
             }
             else
             {

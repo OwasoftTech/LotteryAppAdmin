@@ -27,10 +27,51 @@ namespace GUI
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            //services.AddHttpContextAccessor();
+            //services.AddDistributedMemoryCache();
+            //services.Configure<CookiePolicyOptions>(options =>
+            //{
+            //    // This lambda determines whether user consent for non-essential cookies is needed for a given request.
+            //    options.CheckConsentNeeded = context => false;
+            //    options.MinimumSameSitePolicy = SameSiteMode.None;
+            //});
+            //services.AddSession(options =>
+            //{
+
+            //    options.IdleTimeout = TimeSpan.FromHours(11);
+            //    options.Cookie.HttpOnly = true;
+            //    options.Cookie.IsEssential = true;
+            //});
+
+            //services.ConfigureApplicationCookie(options =>
+            //{
+            //    options.ExpireTimeSpan = TimeSpan.FromDays(2);
+
+            //});
+            //services.AddMvc();
+            //services.AddSession(options =>
+            //{
+            //    options.IdleTimeout = TimeSpan.FromMinutes(15);
+            //    options.Cookie.HttpOnly = true;
+            //    options.Cookie.IsEssential = true;
+            //    //options.Cookie.Name = ".islam.cookie";
+            //});
+            //services.AddMemoryCache();
+            //services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
+
+
+            services.AddDistributedMemoryCache();
+
+            services.AddSession(options =>
+            {
+                options.Cookie.Name = ".AdventureWorks.Session";
+                options.IdleTimeout = TimeSpan.FromHours(10);
+                options.Cookie.IsEssential = true;
+            });
             services.AddControllersWithViews();
             services.AddDbContext<LotteryAppDBContext>(p => p.UseSqlServer(Configuration.GetConnectionString("LotteryAppDatabase")));
             ServiceModule.Regsiter(services);
-            services.AddControllers();
+           // services.AddControllers();
             services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
             // Register the Swagger generator, defining 1 or more Swagger documents
             services.AddSwaggerGen();
@@ -49,23 +90,6 @@ namespace GUI
             //        },
             //    });
             //});
-            services.AddHttpContextAccessor();
-            services.AddSession(options => {
-                options.Cookie.IsEssential = true;
-                options.IdleTimeout = TimeSpan.FromHours(11);
-                options.Cookie.HttpOnly = true;
-            });
-            services.Configure<CookiePolicyOptions>(options =>
-            {
-                // This lambda determines whether user consent for non-essential cookies is needed for a given request.
-                options.CheckConsentNeeded = context => true;
-                options.MinimumSameSitePolicy = SameSiteMode.None;
-            });
-            services.ConfigureApplicationCookie(options =>
-            {
-                options.ExpireTimeSpan = TimeSpan.FromDays(2);
-                options.SlidingExpiration = true;
-            });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -81,9 +105,6 @@ namespace GUI
                 // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
                 app.UseHsts();
             }
-            app.UseHttpsRedirection();
-            app.UseStaticFiles();
-            app.UseSession();
             app.UseSwagger(c =>
             {
                 c.SerializeAsV2 = true;
@@ -92,7 +113,7 @@ namespace GUI
             {
                 c.SwaggerEndpoint("/swagger/v1/swagger.json", "My API V1");
             });
-            app.UseRouting();
+
             //app.UseSwagger();
 
             //// Enable middleware to serve swagger-ui (HTML, JS, CSS, etc.),
@@ -105,10 +126,13 @@ namespace GUI
             //    // To serve SwaggerUI at application's root page, set the RoutePrefix property to an empty string.
             //    //c.RoutePrefix = string.Empty;
             //});
-           
+            app.UseHttpsRedirection();
+            app.UseStaticFiles();
 
+            app.UseRouting();
+            app.UseAuthentication();
             app.UseAuthorization();
-
+            app.UseSession();
             //app.UseEndpoints(endpoints =>
             //{
             //    endpoints.MapControllerRoute(
@@ -117,7 +141,7 @@ namespace GUI
             //});
             app.UseEndpoints(endpoints =>
             {
-                endpoints.MapControllers();
+                //endpoints.MapControllers();
                 endpoints.MapAreaControllerRoute(
                 name: "Admin",
                 areaName: "Admin",

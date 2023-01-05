@@ -15,5 +15,6 @@ namespace Infrastructure.Interfaces
         Task<AppUserVM> AppUserSignIn(AppUserSignin model);
         Task<AppUserVM> AppUserGetById(int id);
         Task<PagingModel<AppUserVM>> AppUsersGetAll(string SearchTerm = "", int PageIndex = 1, int PageSize = 10);
+        Task<int> TotalAppUsers();
     }
 }

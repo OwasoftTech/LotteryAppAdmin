@@ -3,6 +3,7 @@ using Infrastructure.Interfaces;
 using Infrastructure.Utilities;
 using Infrastructure.ViewModels;
 using Microsoft.Data.SqlClient;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using System;
 using System.Collections.Generic;
@@ -17,11 +18,13 @@ namespace Infrastructure.Implementation
     {
         private IGenericRepository _genericRepository;
         private string _ConnectionString;
+        private LotteryAppDBContext _context;
 
-        public AppUserRepository(IGenericRepository genericRepository , IConfiguration config)
+        public AppUserRepository(IGenericRepository genericRepository, IConfiguration config , LotteryAppDBContext context)
         {
             _genericRepository = genericRepository;
             _ConnectionString = config.GetConnectionString("LotteryAppDatabase");
+            _context = context;
         }
         public async Task<bool> AppUserSignUp(AppUserSignUpVM model)
         {
@@ -42,16 +45,19 @@ namespace Infrastructure.Implementation
         public async Task<bool> AppUserUpdate(AppUserUpdateVM model)
         {
             var Entity = await AppUserEntity(model.Id);
-            if(Entity!= null)
+            if (Entity != null)
             {
                 Entity.Name = model.Name;
-                Entity.PhotoName = model.photoName;
-                return await _genericRepository.Update(Entity); 
+                if (model.photoName != null)
+                {
+                    Entity.PhotoName = model.photoName;
+                }
+                return await _genericRepository.Update(Entity);
             }
             else
             {
                 return false;
-            }           
+            }
         }
         public async Task<AppUserVM> AppUserSignIn(AppUserSignin model)
         {
@@ -100,6 +106,10 @@ namespace Infrastructure.Implementation
         public async Task<PagingModel<AppUserVM>> AppUsersGetAll(string SearchTerm = "", int PageIndex = 1, int PageSize = 10)
         {
             return await _genericRepository.GetPagedData<AppUserVM>($@"[{DbSchema.App}].[AppUserGetAll]", PageIndex, PageSize, SearchTerm, GetAllParms.NotDeleted, GetAllParms.TempId);
+        }
+        public async Task<int> TotalAppUsers()
+        {
+            return await _context.AppUsers.Where(p => p.IsDeleted != true).CountAsync();
         }
     }
 }
